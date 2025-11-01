@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 
 const VehicleAnalytics = () => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -13,19 +13,13 @@ const VehicleAnalytics = () => {
     { id: 5, vehicleNumber: 'AP27IJ7890', owner: 'Priya Kumar', model: 'Yamaha Fascino', violations: 4, pendingChallans: 1, totalAmount: 2200 }
   ];
   
-  const [filteredVehicles, setFilteredVehicles] = useState(vehicleData);
-  
-  useEffect(() => {
-    if (searchTerm) {
-      const filtered = vehicleData.filter(vehicle => 
-        vehicle.vehicleNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        vehicle.owner.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-      setFilteredVehicles(filtered);
-    } else {
-      setFilteredVehicles(vehicleData);
-    }
-  }, [searchTerm]);
+  const filteredVehicles = useMemo(() => {
+    if (!searchTerm) return vehicleData;
+    return vehicleData.filter(vehicle => 
+      vehicle.vehicleNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      vehicle.owner.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [searchTerm, vehicleData]);
   
   const getViolationSeverity = (count) => {
     if (count >= 5) return 'high';

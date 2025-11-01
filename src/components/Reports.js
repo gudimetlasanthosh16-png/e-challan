@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import ChallanService from '../services/challanService';
+import React, { useState, useEffect, useCallback } from 'react';
 
 const Reports = () => {
   const [reportType, setReportType] = useState('daily');
@@ -11,25 +10,12 @@ const Reports = () => {
   const [loading, setLoading] = useState(false);
   
   // Initialize with default date range
-  useEffect(() => {
-    const today = new Date();
-    const lastWeek = new Date(today);
-    lastWeek.setDate(today.getDate() - 7);
-    
-    setDateRange({
-      startDate: lastWeek.toISOString().split('T')[0],
-      endDate: today.toISOString().split('T')[0]
-    });
-  }, []);
-  
-  const generateReport = async () => {
+  const generateReport = useCallback(async () => {
     setLoading(true);
     
     try {
       // In a real app, this would call the actual report API
       // For now, we'll simulate with mock data
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
       const mockReportData = {
         daily: {
           title: 'Daily Collection Report',

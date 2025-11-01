@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import ChallanService from '../services/challanService';
 
 const Speedometer = () => {
@@ -8,31 +8,15 @@ const Speedometer = () => {
   const [isMonitoring, setIsMonitoring] = useState(false);
   const [warningCount, setWarningCount] = useState(0);
   const [showWarning, setShowWarning] = useState(false);
-  const [complaints, setComplaints] = useState([]);
-  const [speedHistory, setSpeedHistory] = useState([]);
   const [challans, setChallans] = useState([]);
-  const [notifications, setNotifications] = useState([]);
-  const warningTimeoutRef = useRef(null);
   const speedIntervalRef = useRef(null);
   const alarmSoundRef = useRef(null);
   const speedsRef = useRef([]);
   const overspeedEventsRef = useRef([]);
+  const warningTimeoutRef = useRef(null);
 
-  // Subscribe to notifications
-  useEffect(() => {
-    const notificationCallback = (notification) => {
-      setNotifications(prev => [notification, ...prev.slice(0, 9)]);
-    };
-    
-    ChallanService.subscribeToNotifications(notificationCallback);
-    
-    return () => {
-      ChallanService.unsubscribeFromNotifications(notificationCallback);
-    };
-  }, []);
-
-  // Simulate speed monitoring
-  const startMonitoring = () => {
+  const startMonitoring = useCallback(() => {
+    if (speedIntervalRef.current) return;
     if (isMonitoring) return;
     
     setIsMonitoring(true);

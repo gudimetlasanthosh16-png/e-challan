@@ -5,9 +5,9 @@ const ModernDashboard = ({ onNavigate, userType }) => {
   const [stats, setStats] = useState(null);
   const [recentChallans, setRecentChallans] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [timeRange, setTimeRange] = useState('week');
   const [notifications, setNotifications] = useState([]);
-  
+  const [timeRange, setTimeRange] = useState('week');
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -15,48 +15,16 @@ const ModernDashboard = ({ onNavigate, userType }) => {
           ChallanService.getDashboardStats(),
           ChallanService.getAllChallans()
         ]);
-        
+
         setStats(statsData);
-        // Sort challans by date and get the most recent ones
-        const sortedChallans = [...challansData].sort((a, b) => 
-          new Date(b.date) - new Date(a.date)
-        );
+        const sortedChallans = [...challansData].sort((a, b) => new Date(b.date) - new Date(a.date));
         setRecentChallans(sortedChallans.slice(0, 5));
-        
-        // Mock notifications with more realistic data
+
         setNotifications([
-          { 
-            id: 1, 
-            title: 'New Challan Generated', 
-            message: 'Challan #AP123456 created for vehicle AP23AB1234', 
-            time: '2 min ago', 
-            unread: true,
-            type: 'info'
-          },
-          { 
-            id: 2, 
-            title: 'Payment Received', 
-            message: 'Payment of ₹500 received for challan #AP123457', 
-            time: '15 min ago', 
-            unread: true,
-            type: 'success'
-          },
-          { 
-            id: 3, 
-            title: 'System Update', 
-            message: 'New violation types added to the system', 
-            time: '1 hour ago', 
-            unread: false,
-            type: 'info'
-          },
-          { 
-            id: 4, 
-            title: 'High Violation Alert', 
-            message: 'Overspeeding violations increased by 25% this week', 
-            time: '3 hours ago', 
-            unread: true,
-            type: 'warning'
-          }
+          { id: 1, title: 'New Challan Generated', message: 'Challan #AP123456 created for vehicle AP23AB1234', time: '2 min ago', unread: true, type: 'info' },
+          { id: 2, title: 'Payment Received', message: 'Payment of ₹500 received for challan #AP123457', time: '15 min ago', unread: true, type: 'success' },
+          { id: 3, title: 'System Update', message: 'New violation types added to the system', time: '1 hour ago', unread: false, type: 'info' },
+          { id: 4, title: 'High Violation Alert', message: 'Overspeeding violations increased by 25% this week', time: '3 hours ago', unread: true, type: 'warning' }
         ]);
       } catch (error) {
         console.error('Error fetching dashboard data:', error);
@@ -64,11 +32,10 @@ const ModernDashboard = ({ onNavigate, userType }) => {
         setLoading(false);
       }
     };
-    
+
     fetchData();
   }, []);
-  
-  // More realistic mock data for charts
+
   const violationData = [
     { name: 'Overspeeding', value: 145, color: '#3b82f6' },
     { name: 'No Helmet', value: 98, color: '#10b981' },
@@ -77,7 +44,7 @@ const ModernDashboard = ({ onNavigate, userType }) => {
     { name: 'No License', value: 28, color: '#ef4444' },
     { name: 'No Insurance', value: 19, color: '#ec4899' }
   ];
-  
+
   const collectionData = [
     { name: 'Mon', amount: 125400 },
     { name: 'Tue', amount: 187300 },
@@ -87,42 +54,39 @@ const ModernDashboard = ({ onNavigate, userType }) => {
     { name: 'Sat', amount: 256800 },
     { name: 'Sun', amount: 224100 }
   ];
-  
+
   const officerQuickActions = [
-    { id: 1, name: 'Generate Challan', icon: '📝', color: '#3b82f6', action: 'challan' },
-    { id: 2, name: 'Search Vehicle', icon: '🚗', color: '#10b981', action: 'search' },
-    { id: 3, name: 'Process Payment', icon: '💳', color: '#8b5cf6', action: 'payment' },
-    { id: 4, name: 'View Reports', icon: '📊', color: '#f59e0b', action: 'reports' },
-    { id: 5, name: 'Check Notifications', icon: '🔔', color: '#ef4444', action: 'notifications' },
-    { id: 6, name: 'Violation Trends', icon: '📈', color: '#8b5cf6', action: 'trends' },
-    { id: 7, name: 'Vehicle Analytics', icon: '🚘', color: '#10b981', action: 'analytics' },
-    { id: 8, name: 'Officer Performance', icon: '👮', color: '#f59e0b', action: 'performance' }
+    { id: 1, name: 'Generate Challan', icon: '', color: '#3b82f6', action: 'challan' },
+    { id: 2, name: 'Search Vehicle', icon: '', color: '#10b981', action: 'search' },
+    { id: 3, name: 'Process Payment', icon: '', color: '#8b5cf6', action: 'payment' },
+    { id: 4, name: 'View Reports', icon: '', color: '#f59e0b', action: 'reports' },
+    { id: 5, name: 'Check Notifications', icon: '', color: '#ef4444', action: 'notifications' },
+    { id: 6, name: 'Violation Trends', icon: '', color: '#8b5cf6', action: 'trends' },
+    { id: 7, name: 'Vehicle Analytics', icon: '', color: '#10b981', action: 'analytics' },
+    { id: 8, name: 'Officer Performance', icon: '', color: '#f59e0b', action: 'performance' }
   ];
-  
+
   const citizenQuickActions = [
-    { id: 1, name: 'Pay Challan', icon: '💳', color: '#10b981', action: 'payment' },
-    { id: 2, name: 'My Challans', icon: '📋', color: '#3b82f6', action: 'history' },
-    { id: 3, name: 'Check Notifications', icon: '🔔', color: '#ef4444', action: 'notifications' },
-    { id: 4, name: 'View Reports', icon: '📊', color: '#f59e0b', action: 'reports' }
+    { id: 1, name: 'Pay Challan', icon: '', color: '#10b981', action: 'payment' },
+    { id: 2, name: 'My Challans', icon: '', color: '#3b82f6', action: 'history' },
+    { id: 3, name: 'Check Notifications', icon: '', color: '#ef4444', action: 'notifications' },
+    { id: 4, name: 'View Reports', icon: '', color: '#f59e0b', action: 'reports' }
   ];
-  
+
   const handleQuickAction = (action) => {
-    // Navigate to the appropriate page based on the action
     if (onNavigate) {
       onNavigate(action.action);
     }
   };
-  
+
   const markNotificationAsRead = (id) => {
-    setNotifications(notifications.map(notification => 
-      notification.id === id ? { ...notification, unread: false } : notification
-    ));
+    setNotifications(notifications.map(notification => notification.id === id ? { ...notification, unread: false } : notification));
   };
-  
+
   const getUnreadCount = () => {
     return notifications.filter(n => n.unread).length;
   };
-  
+
   const formatCurrency = (amount) => {
     return new Intl.NumberFormat('en-IN', {
       style: 'currency',
