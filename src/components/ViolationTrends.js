@@ -34,7 +34,7 @@ const ViolationTrends = () => {
   const [data, setData] = useState(monthlyData);
   
   useEffect(() => {
-    switch (timeRange) {
+    switch(timeRange) {
       case 'week':
         setData(weeklyData);
         break;
@@ -44,7 +44,7 @@ const ViolationTrends = () => {
       default:
         setData(monthlyData);
     }
-  }, [timeRange]);
+  }, [timeRange, dailyData, weeklyData, monthlyData]);
   
   const getMaxValue = () => {
     return Math.max(...data.flatMap(item => 

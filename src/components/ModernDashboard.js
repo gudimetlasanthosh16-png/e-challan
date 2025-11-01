@@ -5,7 +5,7 @@ const ModernDashboard = ({ onNavigate, userType }) => {
   const [stats, setStats] = useState(null);
   const [recentChallans, setRecentChallans] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [notifications, setNotifications] = useState([]);
+  const [notifications] = useState([]);
   const [timeRange, setTimeRange] = useState('week');
 
   useEffect(() => {
@@ -77,10 +77,6 @@ const ModernDashboard = ({ onNavigate, userType }) => {
     if (onNavigate) {
       onNavigate(action.action);
     }
-  };
-
-  const markNotificationAsRead = (id) => {
-    setNotifications(notifications.map(notification => notification.id === id ? { ...notification, unread: false } : notification));
   };
 
   const getUnreadCount = () => {

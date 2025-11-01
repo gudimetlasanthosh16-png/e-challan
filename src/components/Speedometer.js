@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import ChallanService from '../services/challanService';
 
 const Speedometer = () => {
   const [speed, setSpeed] = useState(0);
@@ -8,9 +7,7 @@ const Speedometer = () => {
   const [isMonitoring, setIsMonitoring] = useState(false);
   const [warningCount, setWarningCount] = useState(0);
   const [showWarning, setShowWarning] = useState(false);
-  const [challans, setChallans] = useState([]);
   const speedIntervalRef = useRef(null);
-  const alarmSoundRef = useRef(null);
   const speedsRef = useRef([]);
   const overspeedEventsRef = useRef([]);
   const warningTimeoutRef = useRef(null);

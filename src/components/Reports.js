@@ -69,7 +69,7 @@ const Reports = () => {
     if (dateRange.startDate && dateRange.endDate) {
       generateReport();
     }
-  }, [reportType, dateRange]);
+  }, [reportType, dateRange, generateReport]);
   
   return (
     <div className="reports">
